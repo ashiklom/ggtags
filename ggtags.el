@@ -331,6 +331,12 @@ Set to nil to disable tag highlighting."
   :type 'function
   :group 'ggtags)
 
+(defcustom ggtags-literal-search nil
+  "If non-nil, do not use regular expressions for search (\"--literal\" flag)."
+  :safe 'booleanp
+  :type 'boolean
+  :group 'ggtags)
+
 ;; Used by ggtags-global-mode
 (defvar ggtags-global-error "match"
   "Stem of message to print when no matches are found.")
@@ -883,6 +889,7 @@ blocking emacs."
                                (ggtags-project-has-path-style (ggtags-find-project))
                                "--path-style=shorter")
                           (and ggtags-global-treat-text "--other")
+                          (and ggtags-literal-search "--literal")
                           (pcase cmd
                             ((pred stringp) cmd)
                             (`definition nil) ;-d not supported by Global 5.7.1
